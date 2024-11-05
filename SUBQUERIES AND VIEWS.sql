@@ -38,8 +38,6 @@ WHERE Population > (SELECT AVG(Population) FROM Country);
 -- -- PART 2 :
 /*Create a database named Product and create a table called Customer with the following fields in the Product database
 : Customer_Id - Make PRIMARY KEY First_name Last_name Email Phone_no Address City State Zip_code Country 
-
-Then perform the SELECT operation for the customer_info view. 
 */
 -- Create a database named Product 
 CREATE DATABASE Product;
@@ -67,13 +65,13 @@ VALUES
     (1, 'John', 'Jacob', 'johnjacob@example.com', '1234567890', '123 Elm St', 'New York', 'New York', '10001', 'US'),
     (2, 'Annie', 'Smith', 'Anniesmith@example.com', '0987654321', '456 Oak St', 'Los Angeles', 'California', '90001', 'US'),
     (3, 'Michael', 'Johnson', 'mjohnson@example.com', '2345678901', '789 Pine St', 'Chicago', 'Illinois', '60601', 'US'),
-    (4, 'Emily', 'Cooper', 'Emilycooper@example.com', '3456789012', '101 Maple Ave', 'Houston', 'Texas', '77001', 'US'),
-    (5, 'William', 'Joe', 'williamj@example.com', '4567890123', '202 Birch Rd', 'Dallas', 'Texas', '75201', 'US'),
-    (6, 'Linda', 'Wilson', 'lwilson@example.com', '5678901234', '303 street', 'Philadelphia', 'Pennsylvania', '19101', 'US'),
+    (4, 'Emily', 'Cooper', 'Emilycooper@example.com', '3456789012', '101 Maple Ave', 'Melbourne', 'Victoria', '77001', 'Australia'),
+    (5, 'William', 'Joe', 'williamj@example.com', '4567890123', '202 Birch Rd', 'Mumbai', 'Maharashtra', '75201', 'India'),
+    (6, 'Linda', 'Wilson', 'lwilson@example.com', '5678901234', '303 street', 'Vancouver', 'British Columbia', '19101', 'Canada'),
     (7, 'Jaime', 'Taylor', 'jtaylor@example.com', '6789012345', '404 Walnut Ln', 'San Diego', 'California', '92101', 'US'),
     (8, 'Basim', 'jass', 'bjass@example.com', '7890123456', '505 Ash Dr', 'Dallas', 'Texas', '75201', 'US'),
     (9, 'Robert', 'Andy', 'robert@example.com', '8901234567', '606 Spruce Ct', 'San Francisco', 'California', '94101', 'US'),
-    (10, 'Patty', 'Thomas', 'pthomas@example.com', '9012345678', '707 Redwood St', 'Austin', 'Texas', '73301', 'US');
+    (10, 'Patty', 'Thomas', 'pthomas@example.com', '9012345678', '707 Redwood St', 'Bangalore', 'Karnataka', '73301', 'India');
 
 SELECT * FROM customer;
 -- 1. Create a view named customer_info for the Customer table that displays Customer’s Full name and email address. 
@@ -102,10 +100,15 @@ FROM Customer;
 SELECT * FROM Customer_details;
 
 -- 4. Update phone numbers of customers who live in California for Customer_details view. 
-UPDATE Customer
-SET Phone_no = 'NEW_PHONE_NUMBER'  -- Replace NEW_PHONE_NUMBER with the actual phone number
-WHERE State = 'California';
+set sql_safe_updates =0;
 
+-- Update specific phone numbers based on customer IDs
+UPDATE Customer_details
+SET phone_no = '1234567890' 
+WHERE state = 'California';
+
+-- perform the SELECT operation for the Customer_details view
+SELECT * FROM Customer_details;
 -- 5. Count the number of customers in each state and show only states with more than 5 customers. 
 SELECT State, COUNT(*) AS Number_of_Customers
 FROM Customer
